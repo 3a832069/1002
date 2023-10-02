@@ -6,3 +6,4 @@ This is a temporary script file.
 """
 print('hello world')
 print('hi')
+print('hiiiii')
