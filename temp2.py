@@ -9,7 +9,7 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
-from sklearn.tree import export_text
+
 
 # 讀取資料集
 data = pd.read_csv('output.csv')
@@ -27,6 +27,10 @@ X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2,
 # 定義多個決策樹模型
 tree_algorithms = ['id3', 'c4.5', 'c5.0', 'cart']
 results = []
+"""
+best：選擇最佳的分割策略，決策樹會選擇最能區分不同類別的特徵來分割。
+random：使用隨機選擇的分割特徵，適用於資料特徵較多時，加速模型訓練。
+"""
 
 for algorithm in tree_algorithms:
     # 選擇模型
@@ -57,10 +61,22 @@ for algorithm in tree_algorithms:
         'Train Accuracy': train_accuracy,
         'Test Accuracy': test_accuracy
     })
+    """
+    append為對result表新增資料
+    """
 
     # 將分類預測結果輸出到Excel檔案
     output_df = pd.DataFrame({'Actual': y_test, 'Predicted': y_test_pred})
+    """
+    DataFrame建立表格資料
+    '欄位名稱':資料
+    """
     output_df.to_excel(f'{algorithm}_predictions.xlsx', index=False)
+    
+    """
+    輸出excel(檔名格式，不要索引)
+    
+    """
 
 # 輸出結果
 result_df = pd.DataFrame(results)

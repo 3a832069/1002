@@ -19,14 +19,27 @@ data = pd.read_csv('output.csv',)
 
 # 將特徵和目標變數分開
 X = data.drop('education', axis=1)  # 使用 'education' 以預測
+"""
+axis=1代表水平方向(列)
+axis=0代表垂直方向(行)
+"""
 y = data['education']
 
 # 使用One-Hot編碼處理類別變數
+"""
+目前特徵為非數值的資料，因此需要進行編碼才能跑計算
+"""
+
 X_encoded = pd.get_dummies(X)
 
 # 切分訓練和測試資料集
 X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=42)
-
+"""
+test_size=0.2 為將資料分成訓練集和測試集時，測試集的大小為整個資料集的20%
+將編碼後的特徵資料 X_encoded 和目標資料 y 分割為
+訓練集（X_train 和 y_train）和測試集（X_test 和 y_test）
+random_state相同就可獲得相同的隨機結果，可以是任何整數
+"""
 # 選擇模型（這裡使用決策樹）
 model = DecisionTreeClassifier()
 
@@ -36,6 +49,10 @@ model.fit(X_train, y_train)
 # 預測
 y_train_pred = model.predict(X_train)
 y_test_pred = model.predict(X_test)
+"""
+用訓練好的特徵x預測目標變數Y
+存起來用來比較訓練資料與測試資料
+"""
 
 # 計算訓練資料集和測試資料集的正確率
 train_accuracy = accuracy_score(y_train, y_train_pred)
