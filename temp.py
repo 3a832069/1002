@@ -75,7 +75,12 @@ dot_data = tree.export_graphviz(model, out_file=None,
 graph = graphviz.Source(dot_data)
 graph.render("decision_tree", format="pdf")  
 #Image(graph.render("decision_tree.pdf"))
-
+"""
+filled:顏色填充
+rounded:圓角
+X_encoded.columns:特徵欄位名稱
+y.unique()可視化類別名稱??
+"""
 
 
 
