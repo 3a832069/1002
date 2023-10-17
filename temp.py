@@ -12,6 +12,8 @@ import pandas as pd
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+from sklearn import tree
+import graphviz
 
 # 讀取資料集
 data = pd.read_csv('output.csv',)
@@ -58,11 +60,21 @@ y_test_pred = model.predict(X_test)
 train_accuracy = accuracy_score(y_train, y_train_pred)
 test_accuracy = accuracy_score(y_test, y_test_pred)
 
+
+
 # 輸出結果
 print("訓練資料集分類正確率：", train_accuracy)
 print("測試資料集分類正確率：", test_accuracy)
 
 
+# 輸出圖片
+dot_data = tree.export_graphviz(model, out_file=None, 
+                           feature_names=X_encoded.columns,
+                           class_names=y.unique(),
+                           filled=True, rounded=True, special_characters=True)
+graph = graphviz.Source(dot_data)
+graph.render("decision_tree", format="pdf")  
+#Image(graph.render("decision_tree.pdf"))
 
 
 
