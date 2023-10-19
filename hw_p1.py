@@ -10,6 +10,7 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, confusion_matrix
+from sklearn.metrics import precision_score, recall_score, f1_score
 
 # 讀取資料集
 train_data = pd.read_csv('train.csv')
@@ -58,13 +59,26 @@ print("訓練集分類正確率:", train_accuracy)
 test_accuracy = accuracy_score(test_y, test_predictions)
 print("測試集分類正確率:", test_accuracy)
 
+# 計算精確度
+precision = precision_score(test_y, test_predictions, pos_label=' >50K')
+print("精確度:", precision)
+
+# 計算召回率
+recall = recall_score(test_y, test_predictions, pos_label=' >50K')
+print("召回率:", recall)
+
+# 計算F1分數
+f1 = f1_score(test_y, test_predictions, pos_label=' >50K')
+print("F1分數:", f1)
+
+
 # 計算混淆矩陣
 conf_matrix = confusion_matrix(test_y, test_predictions)
 print("混淆矩陣:")
 print(conf_matrix)
-
+"""
 # 創建包含預測結果的DataFrame
-test_results = test_data.copy()
+test_results = test_data[['income']].copy()
 test_results['Predicted'] = test_predictions
 
 # 將結果寫入Excel檔案
@@ -75,3 +89,4 @@ preprocessed_train_data = pd.DataFrame(train_x, columns=combined_data.columns.dr
 preprocessed_test_data = pd.DataFrame(test_x, columns=combined_data.columns.drop('income'))
 preprocessed_train_data.to_excel('preprocessed_train_data.xlsx', index=False)
 preprocessed_test_data.to_excel('preprocessed_test_data.xlsx', index=False)
+"""
